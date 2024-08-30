@@ -1,75 +1,112 @@
 const caixaPrincipal = document.querySelector(".caixa-principal");
-const caixaPrincipal = document.querySelector(".caixa-principal");
-const caixaPrincipal = document.querySelector(".caixa-alternativas");
-const caixaPrincipal = document.querySelector(".caixa-resultado");
-const textoResultado = document.querySelector(".caixa-resultado");
-
-
+const caixaPerguntas = document.querySelector(".caixa-principal");
+const caixaAlternativas = document.querySelector(".caixa-alternativas");
+const caixaResultados = document.querySelector(".caixa-resultado");
+const textoResultados = document.querySelector(".caixa-resultado");
 
 const perguntas = [
     {
-        enunciado: "Pergunta?",
+        enunciado: "Quais materiais podem ser reciclados?",
         alternativas: [
             {
-                texto: " Texto/resposta",
-                afirmacao: " Afirmação ",
+                texto: "Plasico,papelão,vidro,alumínio",
+                afirmacao: " Parabéns você acertou,esses são os lixos reciclaveis ",
             },
             {
-                texto: " Texto/resposta ",
-                afirmacao: " Afirmação ",
+                texto: "lampada, espelho,ampola de remédio",
+                afirmacao: "Que pena você errou,esses não são os lixos reciclaveis",
             }
         ]
     },
     {
-        enunciado: " Pergunta?",
+        enunciado: "Quais são os diferentes tipos de plasticos que podem ser reciclados?",
         alternativas: [
             {
-                texto: " Texto/resposta ",
-                afirmacao: " Afirmação ",
+                texto: "Polipropileno,Polietileno",
+                afirmacao: "Esses são os plasticos correto para fazer a reciclagem",
             },
             {
-                texto: " Texto/resposta ",
-                afirmacao: " Afirmação ",
+                texto: "Plastico pvc e acidos polelático",
+                afirmacao: "Esses não são palsticos adequados para a reciclagem",
             }
         ]
     },
     {
-        enunciado: " Pergunta?",
+        enunciado: " O que é coleta seletiva?",
         alternativas: [
             {
-                texto: " Texto/resposta ",
-                afirmacao: " Afirmação ",
+                texto: " É a separação do lixo em devidas cores ",
+                afirmacao: " Essa é a forma correta da separação ",
             },
             {
-                texto: " Texto/resposta ",
-                afirmacao: " Afirmação ",
+                texto: " São lixos que podem ser misturados ",
+                afirmacao: " São formas errados de coleta seletiva ",
             }
         ]
     },
     {
-        enunciado: " Pergunta?",
+        enunciado: " O que são residuos líquidos?",
         alternativas: [
             {
-                texto: " Texto/resposta ",
-                afirmacao: " Afirmação ",
+                texto: " São materiais não aproveitados que se encontram no estado líquido ",
+                afirmacao: " Parabéns você acertou ossp é afirmação correta  ",
             },
             {
-                texto: " Texto/resposta ",
-                afirmacao: " Afirmação ",
+                texto: " São materiais reciclaveis que podem ser reutilizados ",
+                afirmacao: " Que pena,essa não é a resposta certa ",
             }
         ]
     },
     {
-        enunciado: " Pergunta?",
+        enunciado: " Onde é o lugar correto para descartar os lixos?",
         alternativas: [
             {
-                texto: " Texto/resposta ",
-                afirmacao: "Afirmação",
+                texto: " Em lixeiras proximas para que seja dirigido os lixos ",
+                afirmacao: "essa é a resposta certa parabéns",
             },
             {
-                texto: " Texto/resposta ",
-                afirmacao: " Afirmação ",
+                texto: " Nas ruas ou em qulquer lugar onde estiver  ",
+                afirmacao: " Infelizmente não é a frma correta ",
             }
         ]
     },
 ];
+
+let atual = 0;
+let perguntaAtual;
+let historiaFinal = "";
+
+function mostraPergunta(){
+    if(atual >= perguntas.length){
+        mostraResultado();
+         return;
+    }
+    perguntaAtual = perguntas[atual];
+    caixaPerguntas.textContent = perguntaAtual.enunciado;
+    caixaAlternativas.textContent = "";
+    mostraAlternativas();
+}
+
+function mostraAlternativas(){
+    for (const alternativas of perguntaAtual.alternativas){
+        const botaoAlternativas = document.createElement("button");
+        botaoAlternativas.textContent = alternativas.texto;
+        botaoAlternativas.addEventListener("click",() => respostaSelecionada(alternativas));
+        caixaAlternativas.appendChild(botaoAlternativas);
+    }
+}
+
+function respostaSelecionada(opicaoSelecionada){
+    const afirmacoes = opicaoSelecionada.afirmacao;
+    historiaFinal += afirmacoes + " ";
+    atual++;
+    mostraPergunta();
+}
+
+function mostraResultado(){
+    caixaPerguntas.textContent = "Em suma, a coleta correta de lixo é essencial para a proteção da saúde pública, a preservação ambiental, a eficiência dos processos de reciclagem, a economia e a educação da comunidade. Adotar práticas corretas na gestão de resíduos contribui para um futuro mais limpo e sustentável para todos."
+    textoResultados.textContent = historiaFinal;
+    caixaAlternativas.textContent = "";
+}
+
+mostraPergunta();
